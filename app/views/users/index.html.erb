@@ -1,0 +1,25 @@
+<h1>Users</h1>
+<table class="table table-striped">
+ <thead>
+  <tr>
+    <th>Name</th>
+    <th>Tickets</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= link_to user.full_name, user_path(user) %></td>
+        <td><%= user.open_tickets.count %></td>
+        <td>
+          <%= link_to 'Show', user %>
+          <%= link_to 'Edit', edit_user_path(user) %>
+          <%= link_to 'Destroy', user, confirm: 'Are you sure?', method: :delete %>
+        </td>
+      </tr>
+    <% end -%>
+  </tbody>
+</table>
+
+<%= link_to "New", new_user_path, :class => 'btn btn-primary' %>

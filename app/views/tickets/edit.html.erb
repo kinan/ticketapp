@@ -1,0 +1,4 @@
+<%= form_for @ticket, :url => ticket_path(@ticket), :html => { :class => "edit_ticket", :id => "edit_ticket" } do |f| -%>
+  <input name="_method" type="hidden" value="put" />
+  <%= render :partial => "form", :locals => {:f => f} %>
+<% end -%>
