@@ -1,10 +1,10 @@
 class User < ActiveRecord::Base
 	has_secure_password
-	attr_accessible :email, :password, :password_confirmation, :first_name, :last_name, :phone, :role, :note
+	attr_accessible :email, :password, :password_confirmation, :name, :phone, :role, :note
 	has_many :tickets, :class_name => "Ticket", :foreign_key => "contact_id"
 
 	# Validations
-	validates :email, :first_name, :last_name, :role, :presence => true
+	validates :email, :name, :role, :presence => true
 	validates :password, :presence => true, :on => :create
 
 	# Callbacks
