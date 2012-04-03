@@ -10,7 +10,7 @@ Ticketapp::Application.routes.draw do
 
   resources :password_resets
 
-  root to: 'tickets#index'
+  root to: 'sessions#new'
 
   get 'login', to: 'sessions#new', as: 'login'
   get 'logout', to: 'sessions#destroy', as: 'logout'

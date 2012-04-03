@@ -1,33 +1,8 @@
-<h1>Tickets</h1>
-<table class="table table-striped">
- <thead>
-  <tr>
-    <th>Ticket #</th>
-    <th>Summary</th>
-    <th>Status</th>
-    <th>Owner</th>
-    <th>Contact</th>
-    <th>Last Activity</th>
-    <th>Actions</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @tickets.each do |ticket| -%>
-   <tr>
-    <td><%= ticket.id %></td>
-    <td><%= link_to ticket.summary, ticket_path(ticket) %></td>
-    <td><%=ticket.status%></td>
-    <td>owner</td>
-    <td>contact</td>
-    <td><%= display_date ticket.updated_at %></td>
-    <td>
-      <%= link_to "Show", ticket_path(ticket) %>
-      <%= link_to "Edit", edit_ticket_path(ticket) %>
-      <%= link_to "Destroy", ticket_path(ticket), :method => :delete, :confirm => "#{t("web-app-theme.confirm", :default => "Are you sure?")}" %>
-    </td>
-    </tr>
-    <% end -%>
-   </tbody>
-</table>
+<h1>Tickets</h1><hr>
+
+<%= render @tickets %>
 
 <%= link_to "New", new_ticket_path, :class => 'btn btn-primary' %>
+
+
+

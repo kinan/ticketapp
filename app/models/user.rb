@@ -1,18 +1,17 @@
 class User < ActiveRecord::Base
 	has_secure_password
-	attr_accessible :email, :password, :password_confirmation, :first_name, :last_name, :phone
+	attr_accessible :email, :password, :password_confirmation, :first_name, :last_name, :phone, :role, :note
 	has_many :tickets, :class_name => "Ticket", :foreign_key => "contact_id"
 
 	# Validations
-	validates_uniqueness_of :email, :first_name, :last_name
-	validates_presence_of :password, :on => :create
+	validates :email, :first_name, :last_name, :role, :presence => true
+	validates :password, :presence => true, :on => :create
 
 	# Callbacks
 	before_create { generate_token(:auth_token) }
 
-	def full_name
-		self.first_name + " " + self.last_name
-	end
+	# Authorization roles
+	ROLES = %w[customer admin]
 
 	def open_tickets
 		self.tickets.where(:closed_at => nil) 	
@@ -23,6 +22,10 @@ class User < ActiveRecord::Base
   		self.password_reset_sent_at = Time.zone.now
   		save!
   		UserMailer.password_reset(self).deliver
+	end
+
+	def is?(role)
+		self.role == role.to_s
 	end
 	
 	protected

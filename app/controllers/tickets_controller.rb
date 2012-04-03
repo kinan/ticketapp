@@ -1,11 +1,14 @@
 class TicketsController < ApplicationController
-  before_filter :authenticate
-  before_filter :authorise_as_owner, :only => [:edit, :update, :delete]
+  load_and_authorize_resource
   
   # GET /tickets
   # GET /tickets.json
   def index
-    @tickets = Ticket.all
+    if current_user.is? :admin
+      @tickets = Ticket.all
+    else
+      @tickets = current_user.tickets
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -44,10 +47,13 @@ class TicketsController < ApplicationController
   # POST /tickets.json
   def create
     @ticket = Ticket.new(params[:ticket])
+    # set user
+    @ticket.contact = current_user
+    @ticket.creator = current_user
 
     respond_to do |format|
       if @ticket.save
-        format.html { redirect_to @ticket, notice: 'Ticket was successfully created.' }
+        format.html { redirect_to tickets_path, notice: 'Help ticket was successfully created.' }
         format.json { render json: @ticket, status: :created, location: @ticket }
       else
         format.html { render action: "new" }
@@ -82,14 +88,5 @@ class TicketsController < ApplicationController
       format.html { redirect_to tickets_url }
       format.json { head :no_content }
     end
-  end
-
-  private
-  def authorise_as_owner
-     unless @ticket.contact_id == current_user.id
-        # You are not authorized
-        flash[:alert]  = "You are not authorised"
-        redirect_to error_url, :status => 401
-     end
   end
 end

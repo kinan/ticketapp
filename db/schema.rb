@@ -11,11 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120330151615) do
+ActiveRecord::Schema.define(:version => 20120403132136) do
 
   create_table "tickets", :force => true do |t|
-    t.string   "summary"
-    t.text     "details"
+    t.string   "subject"
+    t.text     "description"
     t.integer  "group_id"
     t.string   "priority"
     t.string   "status"
@@ -35,8 +35,6 @@ ActiveRecord::Schema.define(:version => 20120330151615) do
   add_index "tickets", ["status"], :name => "index_tickets_on_status"
 
   create_table "users", :force => true do |t|
-    t.string   "first_name"
-    t.string   "last_name"
     t.string   "email"
     t.string   "password_digest"
     t.string   "group_id"
@@ -47,6 +45,10 @@ ActiveRecord::Schema.define(:version => 20120330151615) do
     t.string   "auth_token"
     t.string   "password_reset_token"
     t.datetime "password_reset_sent_at"
+    t.string   "role"
+    t.string   "name"
   end
+
+  add_index "users", ["name"], :name => "index_users_on_name"
 
 end

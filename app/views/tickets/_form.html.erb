@@ -2,11 +2,13 @@
   <%= f.error_notification %>
 
   <div class="form-inputs form-horizontal">
-    <%= f.input :summary, :input_html => { :maxlength => 100, :class => "input-xlarge" } %>
-    <%= f.input :details, :input_html => { :rows => 7, :class => "input-xlarge" } %>
-    <%= f.input :priority, :collection => priorities, :as => :radio_buttons %>
-    <%= f.input :status, :collection => statuses %>
-    <%= f.input :assignee_id %>
+    <%= f.input :subject, :input_html => { :maxlength => 100, :class => "input-xlarge" } %>
+    <%= f.input :description, :input_html => { :rows => 7, :class => "input-xlarge" } %>
+    <%= f.input :priority, :collection => Ticket::PRIORITIES, :as => :radio_buttons, :checked => "low" %>
+    <% if current_user.is? :admin %>
+      <%= f.input :status, :collection => Ticket::STATUSES, :default => "open" %>
+      <%= f.input :assignee_id %>
+    <% end %>
   </div>
 
   <div class="form-actions">
