@@ -22,10 +22,9 @@
         <a class="brand" href="#">Remedy</a>
         <div class="nav-collapse">
           <ul class="nav">
-            <li><%= link_to "Dashboard" %></li>
             <li><%= link_to "Tickets", tickets_path %></li>
             <li><%= link_to "Users", users_path %></li>
-            <li><%= link_to "Help" %></li>
+            <li><%= link_to "Teams", teams_path %></li>
             <li><%= link_to "Contact Us" %></li>
           </ul>
           <%if current_user %>
@@ -33,7 +32,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.name %> <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
+                <li><%= link_to "My account", @current_user %></li>
                 <li><a href="#">Another action</a></li>
                 <li><a href="#">Something else here</a></li>
                 <li class="divider"></li>

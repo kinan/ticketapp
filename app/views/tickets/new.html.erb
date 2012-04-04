@@ -1,4 +1,5 @@
 <h1>New help ticket</h1><hr>
-<%= form_for @ticket, :url => tickets_path, :html => { :class => :form } do |f| -%>
-  <%= render :partial => "form", :locals => {:f => f} %>
-<% end -%>
+
+
+<%= render 'form' %>
+

@@ -1,0 +1,28 @@
+<h1>Teams</h1>
+<table class="table table-striped">
+ <thead>
+  <tr>
+    <th>Name</th>
+    <th>Tickets</th>
+    <th>Members</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+    <% @teams.each do |team| %>
+      <tr>
+        <td><%= team.name %></td>
+        <td><%= team.open_tickets.count %></td>
+        <td><%= display_user_names(team.users) %></td>
+        <td>
+          <%= link_to 'Edit', edit_team_path(team) %>
+          <% if team.open_tickets.empty? %>
+						<%= link_to 'Destroy', team, confirm: 'Are you sure?', method: :delete %>
+					<% end %>
+        </td>
+      </tr>
+    <% end -%>
+  </tbody>
+</table>
+
+<%= link_to "New", new_team_path, :class => 'btn btn-primary' %>

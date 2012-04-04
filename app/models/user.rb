@@ -1,17 +1,29 @@
 class User < ActiveRecord::Base
 	has_secure_password
-	attr_accessible :email, :password, :password_confirmation, :name, :phone, :role, :note
+	attr_accessible :email, :password, :password_confirmation, :name, :phone, :role, :note, :team_ids
 	has_many :tickets, :class_name => "Ticket", :foreign_key => "contact_id"
+
+	has_and_belongs_to_many :teams
 
 	# Validations
 	validates :email, :name, :role, :presence => true
 	validates :password, :presence => true, :on => :create
 
 	# Callbacks
-	before_create { generate_token(:auth_token) }
+	after_initialize :init
+	before_create { generate_token(:auth_token)}
+	before_update {remove_teams if self.is? :customer}
+	before_destroy :remove_teams
+	
+
+	scope :admins, where(:role => "admin")
 
 	# Authorization roles
 	ROLES = %w[customer admin]
+
+	def init
+     self.role  ||= "customer"   #will set the default role to customer
+  end
 
 	def open_tickets
 		self.tickets.where(:closed_at => nil) 	
@@ -29,6 +41,9 @@ class User < ActiveRecord::Base
 	end
 	
 	protected
+	def remove_teams
+		self.teams.clear
+	end
 	def generate_token(column)
   		begin
     		self[column] = SecureRandom.urlsafe_base64

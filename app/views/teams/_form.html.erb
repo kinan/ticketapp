@@ -1,0 +1,11 @@
+<%= simple_form_for(@team) do |f| %>
+  <div class="form-inputs form-horizontal">
+    <%= f.input :name %>
+    <%= f.association :users, :collection => User.admins %>
+  </div>
+  
+  <div class="form-actions">
+  	<%= link_to "Cancel", teams_path,  :class => "btn" %>
+    <%= f.button :submit, :class=> "btn-primary" %>
+  </div>
+<% end %>
