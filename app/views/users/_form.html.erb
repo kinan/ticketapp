@@ -4,11 +4,17 @@
   <div class="form-inputs form-horizontal">
     <%= f.input :name %>
     <%= f.input :email %>
-    <%= f.input :password%>
-    <%= f.input :password_confirmation %>
+    <%if @user.id? %>
+      <a href="#" id="changePassword" style="margin-left: 50%">Change password</a>
+      <% style = "display: none;" %>
+    <%end%> 
+    <div id="password" style="<%= style %>">
+      <%= f.input :password%>
+      <%= f.input :password_confirmation %>
+    </div>
     <%= f.input :phone %>
     <%= f.input :role, :collection => User::ROLES, :as => :radio_buttons %>
-    <div id="teams" style="display: none;"><%= f.association :teams, :input_html =>{:id => ""} %></div>
+    <div id="teams" style="<%= 'display: none;' if @user.is?(:customer) %>"><%= f.association :teams%></div>
 <!--     <%= f.input :note, :input_html => { :rows => 5} %> -->
   </div>
   

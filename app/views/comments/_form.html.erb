@@ -1,0 +1,12 @@
+<%= simple_form_for([@ticket, Comment.new]) do |f| %>
+  <%= f.error_notification %>
+
+  <div class=".form-horizontal">
+    <%= f.input :content, :label => false, :input_html => { :class => 'span7', :rows => 4 } %>
+  </div>
+
+  <div>
+    <%= f.button :submit, 'Submit', :class => 'btn-primary' %>
+  </div>
+<% end %>
+

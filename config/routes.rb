@@ -1,20 +1,12 @@
 Ticketapp::Application.routes.draw do
 
-  get "teams/index"
-
-  get "teams/new"
-
-  get "teams/edit"
-
-  get "teams/update"
-
-  get "teams/destroy"
-
-  get "password_resets/new"
+  resources :teams
 
   resources :users
 
-  resources :tickets
+  resources :tickets do
+    resources :comments
+  end
 
   resources :sessions
 
@@ -22,7 +14,7 @@ Ticketapp::Application.routes.draw do
 
   resources :teams
 
-  root to: 'sessions#new'
+  root to: 'tickets#index'
 
   get 'login', to: 'sessions#new', as: 'login'
   get 'logout', to: 'sessions#destroy', as: 'logout'

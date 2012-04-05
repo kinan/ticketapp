@@ -1,19 +1,22 @@
 module TicketsHelper
-	def display_date(input_date)
-		input_date.strftime("%B %d, %Y")
-		#return input_date.strftime("%d %B %Y at %I:%M%p")
+	def display_date(date)
+		date.strftime("%B %d, %Y")
+	end
+
+	def display_date_time(date)
+		date.strftime("%B %d, %Y at %I:%M%p")
 	end
 
 	def display_priority(priority)
 		case priority
 		when "low"
-  		klass = "label"
+  		klass = "label label-inverse"
 		when "medium"
 			klass = "label label-warning"
   	when "high"
   		klass =  "label label-important"
 		else
-  		klass = "label label-info"
+  		klass = "label"
 		end
 		raw("<span class='#{klass}'>#{priority.humanize}</span>")
 	end

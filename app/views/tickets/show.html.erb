@@ -1,0 +1,25 @@
+<h1><small>#<%= @ticket.id %></small>&#032;<%= @ticket.subject %>&#032;<%= display_priority(@ticket.priority) %></h1>
+<i><%=display_user @ticket.creator %></i>, <%= display_date_time @ticket.created_at %>
+<hr>
+<p>
+	<%= @ticket.description %>
+</p>
+<div class="row">
+  <div class="span2"><i class="icon-flag"></i><%= @ticket.status.humanize %></div>
+  <div class="span2"><i class="icon-tag"></i><%= display_team @ticket.team %></div>
+  <div class="span2"><i class="icon-user"></i><%= display_user(@ticket.assignee) %></div>
+  <div class="span2"><i class="icon-comment"></i><%= @ticket.comments.count %></div>
+  <div class="span1 offset1" style="float: right;"><%= link_to 'Edit', edit_ticket_path(@ticket), :class => "btn" %></div>
+</div>
+<hr>
+<h2>Comments</h2>
+
+<%= render 'comments/form' %>
+
+<%= render :partial => "comments/comment", :collection => @comments %>
+
+<div class="row">
+	<% if @ticket.comments.count > 5 %>
+		<div class="offset6 span2"><%= link_to "See all comments", ticket_comments_path(@ticket) %></div>
+	<% end %>
+</div>

@@ -4,6 +4,7 @@ class Ticket < ActiveRecord::Base
 	belongs_to :contact, :class_name => 'User', :foreign_key => 'contact_id'
 	belongs_to :creator, :class_name => 'User', :foreign_key => 'creator_id'
   belongs_to :team
+  has_many :comments
 
   validates :subject, :description, :team_id, :presence => true
 

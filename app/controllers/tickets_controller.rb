@@ -21,6 +21,9 @@ class TicketsController < ApplicationController
   def show
     @ticket = Ticket.find(params[:id])
 
+    # get last five comments
+    @comments = @ticket.comments.limit(5)
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @ticket }

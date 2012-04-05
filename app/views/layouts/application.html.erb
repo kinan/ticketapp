@@ -46,21 +46,26 @@
     </div>
   </div>
 
-  <div class="container">
+  <div class="container-fluid">
     <% flash.each do |name, msg| %>
       <div class="alert alert-<%= name == :notice ? "success" : "error" %>">
         <a class="close" data-dismiss="alert">×</a>
         <%= msg %>
       </div>
     <% end %>
-    
-    <div class="row">
-      <div class="span9"><%= yield %></div>
-      <div class="span3">
-        <h2>Nav</h2>
-        Some navigation links go here
+    <div class="row-fluid">
+      <div class="span2">
+        Sidebar content
+      <!--Sidebar content-->
+      </div>
+      <div class="span10">
+        <%= yield %>
       </div>
     </div>
+    <hr/>
+    <footer>
+        <p>© Remedy <%= Time.now.year %></p>
+    </footer>
   </div>
 </body>
 </html>

@@ -1,26 +1,27 @@
 <div id="ticket">
 <div class="row">
-  <div class="span5"><h3><small>#<%= ticket.id %></small>&#032;<%= link_to ticket.subject, ticket %></h3></div>
+  <div class="span9"><h3><small>#<%= ticket.id %></small>&#032;<%= link_to ticket.subject, ticket %></h3></div>
   <div class="span1"><%= display_priority(ticket.priority) %></div>
 </div>
 
 <div class="row">
-  <div class="span4"><i><%= ticket.contact.name %></i>, <%= display_date ticket.created_at %></div>
+  <div class="span10"><i><%= display_user ticket.contact %></i>, <%= display_date ticket.created_at %></div>
 </div>
 
 <div class="row">
-  <div class="span6"><%= truncate(ticket.description, :length => 200) %></div>
+  <div class="span10" style="color: grey;"><%= truncate(ticket.description, :length => 300) %></div>
 </div>
 
 <div class="row">
-  <div class="span1"><i class="icon-flag"></i><%= ticket.status.humanize %></div>
+  <div class="span2"><i class="icon-flag"></i><%= ticket.status.humanize %></div>
   <div class="span2"><i class="icon-tag"></i><%= display_team ticket.team %></div>
   <div class="span2"><i class="icon-user"></i><%= display_user(ticket.assignee) %></div>
-  <div class="span2"><i class="icon-comment"></i>0</div>
+  <div class="span2"><i class="icon-comment"></i><%= ticket.comments.count %></div>
+  <div class="span1 offset1"><%= link_to 'Edit', edit_ticket_path(ticket), :class => "btn" %></div>
 </div>
 
 <div class="row">
-  <div class="span6"><hr></div>
+  <div class="span10"><hr></div>
 </div>
 
 </div>
