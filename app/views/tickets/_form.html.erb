@@ -2,7 +2,17 @@
   <%= f.error_notification %>
 
   <div class="form-inputs form-horizontal">
-    <%= f.input :subject, :input_html => { :maxlength => 100, :class => "input-xlarge" } %>
+    <% if current_user.is? :admin%>
+      <div class="control-group string required">
+        <label class="string required control-label" for="user_id">
+          <abbr title="required">*</abbr> User Name
+        </label>
+        <div class="controls">
+          <input type="text" data-provide="typeahead" data-items="4" data-source="[<%= display_typehead(User.all) %>]" class="string required input-xlarge" id="user_name<%= rand() %>" name="user_name" autocomplete="off" value="<%=@ticket.contact.name if !@ticket.contact.nil? %>"/>
+        </div>
+      </div>
+    <% end %>
+    <%= f.input :subject, :input_html => { :maxlength => 50, :class => "input-xlarge" } %>
     <%= f.input :description, :input_html => { :rows => 7, :class => "input-xlarge" } %>
     <%= f.input :priority, :collection => Ticket::PRIORITIES, :as => :radio_buttons, :checked => "low" %>
     <%= f.input :team_id, :collection => Team.all %>
@@ -19,3 +29,6 @@
     <%= f.button :submit, :class => "btn-primary" %>
   </div>
 <% end %>
+
+
+

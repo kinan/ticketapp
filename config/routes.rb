@@ -1,8 +1,8 @@
 Ticketapp::Application.routes.draw do
 
-  resources :teams
-
-  resources :users
+  resources :users do 
+    resources :tickets
+  end
 
   resources :tickets do
     resources :comments
@@ -12,7 +12,9 @@ Ticketapp::Application.routes.draw do
 
   resources :password_resets
 
-  resources :teams
+  resources :teams do
+    resources :tickets
+  end
 
   root to: 'tickets#index'
 

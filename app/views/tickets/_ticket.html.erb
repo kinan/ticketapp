@@ -15,9 +15,9 @@
 <div class="row">
   <div class="span2"><i class="icon-flag"></i><%= ticket.status.humanize %></div>
   <div class="span2"><i class="icon-tag"></i><%= display_team ticket.team %></div>
-  <div class="span2"><i class="icon-user"></i><%= display_user(ticket.assignee) %></div>
+  <div class="span2"><i class="icon-inbox"></i><%= display_user(ticket.assignee) %></div>
   <div class="span2"><i class="icon-comment"></i><%= ticket.comments.count %></div>
-  <div class="span1 offset1"><%= link_to 'Edit', edit_ticket_path(ticket), :class => "btn" %></div>
+  <div class="span1 offset1"><%= link_to 'Edit', edit_ticket_path(ticket) %></div>
 </div>
 
 <div class="row">

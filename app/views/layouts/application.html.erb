@@ -33,8 +33,6 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.name %> <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><%= link_to "My account", @current_user %></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
                 <li class="divider"></li>
                 <li><%= link_to "Sign out", logout_url %></li>
               </ul>
@@ -55,8 +53,9 @@
     <% end %>
     <div class="row-fluid">
       <div class="span2">
-        Sidebar content
-      <!--Sidebar content-->
+        <%if !current_user.nil? && current_user.is?(:admin)%>
+          <%= render 'layouts/sidebar' %>
+        <% end %>
       </div>
       <div class="span10">
         <%= yield %>

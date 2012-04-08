@@ -12,7 +12,12 @@ class Ability
       can [:read, :update], Ticket, :contact_id => user.id
 
       # User
-      can [:show, :update], User, :id => user.id  
+      can [:show, :update], User, :id => user.id
+
+      # Comment
+      can :create, Comment
+      can [:read], Comment, :user_id => user.id
+
     else # guest
         # add things that a guest can do
     end

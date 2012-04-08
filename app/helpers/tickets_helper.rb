@@ -30,4 +30,5 @@ module TicketsHelper
 	def display_team(team)
 		team ? team.name : "Unassigned"
 	end
+
 end

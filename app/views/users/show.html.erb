@@ -1,29 +1,22 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Name:</b>
-  <%= @user.name %>
-</p>
+<h1><%= @user.name %></h1><hr>
 
 <p>
   <b>Email:</b>
-  <%= @user.email %>
+  <%= mail_to @user.email %>
 </p>
 
-<p>
-  <b>Password digest:</b>
-  <%= @user.password_digest %>
-</p>
 
 <p>
   <b>Phone:</b>
   <%= @user.phone %>
 </p>
 
+<%if current_user.is? :admin%>
 <p>
   <b>Note:</b>
   <%= @user.note %>
 </p>
+<%end%>
 
 
 <%= link_to 'Edit', edit_user_path(@user) %> |

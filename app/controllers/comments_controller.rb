@@ -1,8 +1,11 @@
 class CommentsController < ApplicationController
+  before_filter :authenticate
+  load_and_authorize_resource
+
   # GET /comments
   # GET /comments.json
   def index
-    @comments = Comment.all
+    @comments = Comment.paginate(:page => params[:page])
     @ticket = Ticket.find(params[:ticket_id])
 
     respond_to do |format|

@@ -1,9 +1,10 @@
 class TeamsController < ApplicationController
+  before_filter :authenticate
   load_and_authorize_resource
   
 
   def index  
-    @teams = Team.all
+    @teams = Team.paginate(:page => params[:page])
 
     # Modal form
     @team = Team.new # not the best practice but works for now

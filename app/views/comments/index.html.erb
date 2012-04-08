@@ -1,5 +1,5 @@
 <h1>Comments <span class="badge"><%= @ticket.comments.count %></span></h1>
-<i class="icon-arrow-left" ></i><%= link_to "#{@ticket.subject} ", @ticket %>
+<i class="icon-chevron-left" ></i><%= link_to "#{@ticket.subject} ", @ticket %>
 <hr>
 
 <%= render @comments %>

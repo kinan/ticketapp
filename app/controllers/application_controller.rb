@@ -6,6 +6,10 @@ class ApplicationController < ActionController::Base
   	redirect_to root_url
 	end
 
+  def authenticate
+    redirect_to login_url, alert: "Authentication is required" if current_user.nil?
+  end
+
   private
   def current_user
     @current_user ||= User.find_by_auth_token!(cookies[:auth_token]) if cookies[:auth_token]

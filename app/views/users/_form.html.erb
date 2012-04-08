@@ -15,7 +15,9 @@
     <%= f.input :phone %>
     <%= f.input :role, :collection => User::ROLES, :as => :radio_buttons %>
     <div id="teams" style="<%= 'display: none;' if @user.is?(:customer) %>"><%= f.association :teams%></div>
-<!--     <%= f.input :note, :input_html => { :rows => 5} %> -->
+    <%if current_user.is? :admin%>
+    <%= f.input :note, :input_html => { :rows => 5} %>
+    <% end %>
   </div>
   
   <div class="form-actions">

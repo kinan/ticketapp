@@ -1,13 +1,31 @@
 class TicketsController < ApplicationController
+  before_filter :authenticate
   load_and_authorize_resource
-  
+
+
   # GET /tickets
   # GET /tickets.json
   def index
     if current_user.is? :admin
-      @tickets = Ticket.all
+      if params[:user_id]
+        @tickets = User.find(params[:user_id]).tickets.paginate(:page => params[:page])
+      elsif params[:team_id]
+        @tickets = Team.find(params[:team_id]).tickets.paginate(:page => params[:page])
+      else
+        @tickets = Ticket.paginate(:page => params[:page])
+      end
     else
-      @tickets = current_user.tickets
+      @tickets = current_user.tickets.paginate(:page => params[:page])
+    end
+
+    if params[:priority]
+      @tickets = @tickets.where(:priority => params[:priority])
+    end
+
+    if params[:status] == "closed"
+      @tickets = @tickets.closed
+    else
+      @tickets = @tickets.open
     end
 
     respond_to do |format|
@@ -22,7 +40,8 @@ class TicketsController < ApplicationController
     @ticket = Ticket.find(params[:id])
 
     # get last five comments
-    @comments = @ticket.comments.limit(5)
+    @comments_per_page = 5
+    @comments = @ticket.comments.limit(@comments_per_page)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -51,8 +70,14 @@ class TicketsController < ApplicationController
   def create
     @ticket = Ticket.new(params[:ticket])
     # set user
-    @ticket.contact = current_user
     @ticket.creator = current_user
+    if current_user.is? :admin
+      @ticket.contact = User.find_by_name params[:user_name]
+    else
+      @ticket.contact = current_user
+    end
+    
+
 
     respond_to do |format|
       if @ticket.save

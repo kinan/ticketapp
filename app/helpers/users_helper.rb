@@ -1,7 +1,13 @@
 module UsersHelper
-	def display_team_names(team)
+	def display_user_names(users)
 		names = []
-		team.each{|u| names << u.name}
+		users.each{|u| names << u.name}
+		names.join(", ")
+	end
+
+	def display_typehead(users)
+		names = []
+		users.each{|u| names << "\"#{u.name}\""}
 		names.join(", ")
 	end
 end

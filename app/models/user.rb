@@ -17,7 +17,9 @@ class User < ActiveRecord::Base
 	before_destroy :remove_teams
 	
 
+	default_scope order("name")
 	scope :admins, where(:role => "admin")
+
 
 	# Authorization roles
 	ROLES = %w[customer admin]
