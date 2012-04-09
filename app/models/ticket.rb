@@ -4,13 +4,14 @@ class Ticket < ActiveRecord::Base
   belongs_to :contact, :class_name => 'User', :foreign_key => 'contact_id'
   belongs_to :creator, :class_name => 'User', :foreign_key => 'creator_id'
   belongs_to :team
-  has_many :comments
+  has_many :comments, :dependent => :destroy
 
   validates :subject, :description, :team_id, :contact_id, :presence => true
 
   # Callbacks
-  before_update :set_closed_at
+  before_update :set_closed_at, :send_assignment_notification
   after_initialize :init
+  after_create :send_creation_notification
 
   default_scope order("created_at DESC")
   # This is a temporary solution
@@ -47,10 +48,26 @@ class Ticket < ActiveRecord::Base
     # update the closed_at timestamp if the ticket is being closed
     if self.status == "closed"
       self.closed_at = DateTime.now if self.closed_at.nil?
+      UserMailer.ticket_closure(self).deliver
     else
       self.closed_at = nil unless self.closed_at.nil?
     end
   end
 
-  #has_many :comments, :dependent => :destroy
+  def send_creation_notification
+    UserMailer.ticket_confirmation(self).deliver
+    UserMailer.ticket_team_assignment(self).deliver
+  end
+
+  def send_assignment_notification
+    # Notify assignee
+    if self.assignee && self.assignee != Ticket.find(self.id).assignee
+      UserMailer.ticket_user_assignment(self).deliver
+    end
+    # Notify team
+    if self.team != Ticket.find(self.id).team
+      UserMailer.ticket_team_assignment(self).deliver
+    end
+  end
+
 end

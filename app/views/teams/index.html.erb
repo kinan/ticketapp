@@ -12,7 +12,7 @@
     <% @teams.each do |team| %>
       <tr>
         <td><%= team.name %></td>
-        <td><%= team.open_tickets.count %></td>
+        <td><span class="badge"><%= team.open_tickets.count %></span></td>
         <td><%= display_user_names(team.users) %></td>
         <td>
           <%= link_to 'Edit', edit_team_path(team) %>

@@ -11,7 +11,7 @@
     <% @users.each do |user| %>
       <tr>
         <td><%= link_to user.name, user_path(user) %></td>
-        <td><%= user.open_tickets.count %></td>
+        <td><span class="badge"><%= user.open_tickets.count %></span></td>
         <td>
           <%= link_to 'Edit', edit_user_path(user) %>
           <%= link_to 'Destroy', user, confirm: 'Are you sure?', method: :delete %>

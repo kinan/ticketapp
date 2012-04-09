@@ -1,0 +1,11 @@
+Hi <%= @user.name %>
+
+<%= @comment.user.name %> added a new comment to ticket: "<%= @comment.ticket.subject %>":
+
+<%= @comment.content %>
+
+Visit the following link to add a new comment: <%= ticket_url(@comment.ticket) %>
+
+Thanks,
+Remedy
+
