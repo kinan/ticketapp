@@ -36,7 +36,7 @@ class UserMailer < ActionMailer::Base
 
   def comment_creation(comment, user)
   	@comment = comment
-  	@user = user
+  	@user = comment.user
 
   	mail :to => @user.email, :subject => "#{@comment.user.name} commented on \"#{@comment.ticket.subject}\""
   end

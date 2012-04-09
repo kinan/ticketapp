@@ -12,11 +12,11 @@ class Comment < ActiveRecord::Base
 
   protected
   def send_creation_notification
-  		if self.user != self.ticket.contact
+  		if self.user.email != self.ticket.contact.email
   			UserMailer.comment_creation(self, self.ticket.contact).deliver 
   		end
 
-  		if self.user != self.ticket.assignee
+  		if self.ticket.assignee && self.user.email != self.ticket.assignee.email
   			UserMailer.comment_creation(self, self.ticket.assignee).deliver 
   		end
   end
