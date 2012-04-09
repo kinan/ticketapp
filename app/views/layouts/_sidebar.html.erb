@@ -1,44 +1,44 @@
 <div class="well sidebar-nav">
 <ul class="nav nav-list">
   <li class="nav-header"><i class="icon-inbox"></i>My Tickets</li>
-  <li>
+  <li class="<%=active_link('user', nil, nil, current_user.id)%>">
     <a href="<%= user_tickets_url(current_user) %>">Open <span class="badge" style="float: right;"><%= current_user.tickets.count %></span></a>
   </li>
-  <li>
+  <li class="<%=active_link('user', 'high', nil, 2)%>">
     <a href="<%= user_tickets_url(current_user, :priority => "high") %>">High <span class="badge badge-error" style="float: right;"><%= current_user.tickets.open.with_priority(:high).count %></a></span>
   </li>
-  <li>
+  <li class="<%=active_link('user', 'medium', nil, current_user.id)%>">
     <a href="<%= user_tickets_url(current_user, :priority => "medium") %>">Medium <span class="badge badge-warning" style="float: right;"><%= current_user.tickets.open.with_priority(:medium).count %></a></span>
   </li>
-  <li>
+  <li class="<%=active_link('user', 'low', nil, current_user.id)%>">
     <a href="<%= user_tickets_url(current_user, :priority => "low") %>">Low <span class="badge badge-inverse" style="float: right;"><%= current_user.tickets.open.with_priority(:low).count %></a></span>
   </li>
-  <li>
+  <li class="<%=active_link('user', nil, 'closed', current_user.id)%>">
     <a href="<%= user_tickets_url(current_user, :status => "closed") %>">Closed <span class="badge badge-success" style="float: right;"><%= current_user.tickets.closed.count %></span></a>
   </li>
   <li class="divider"/>
   <li class="nav-header"><i class="icon-tag"></i>Team Tickets</li>
   <% for team in Team.all %>
-    <li>
+    <li class="<%=active_link('team', nil, nil, team.id)%>">
     <a href="<%= team_tickets_url team %>" rel="popover" data-content="<%= display_user_names(team.users)%>" data-original-title="<%= team.name %> Team">
       <%= truncate(team.name, :length => 10) %> <span class="badge" style="float: right;"><%= team.tickets.open.count %></span></a>
   </li>
   <% end %>
   <li class="divider"/>
   <li class="nav-header"><i class="icon-th-list"></i>All Tickets</li>
-  <li>
+  <li class="<%=active_link(nil, nil, nil)%>">
     <a href="<%= tickets_url %>">Open <span class="badge" style="float: right;"><%= Ticket.open.count %></span></a>
   </li>
-  <li>
+  <li class="<%=active_link(nil, 'high', nil)%>">
     <a href="<%= tickets_url(:priority => "high") %>">High <span class="badge badge-error" style="float: right;"><%= Ticket.open.with_priority(:high).count %></a></span>
   </li>
-  <li>
+  <li class="<%=active_link(nil, 'medium', nil)%>"> 
     <a href="<%= tickets_url(:priority => "medium") %>">Medium <span class="badge badge-warning" style="float: right;"><%= Ticket.open.with_priority(:medium).count %></a></span>
   </li>
-  <li>
+  <li class="<%=active_link(nil, 'low', nil)%>">
     <a href="<%= tickets_url(:priority => "low") %>">Low <span class="badge badge-inverse" style="float: right;"><%= Ticket.open.with_priority(:low).count %></a></span>
   </li>
-  <li>
+  <li class="<%=active_link(nil, nil, 'closed')%>">
     <a href="<%= tickets_url(:status => "closed") %>">Closed <span class="badge badge-success" style="float: right;"><%= Ticket.closed.count %></span></a>
   </li>
 

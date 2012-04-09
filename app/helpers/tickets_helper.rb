@@ -31,4 +31,21 @@ module TicketsHelper
 		team ? team.name : "Unassigned"
 	end
 
+	def active_link(scope, priority, status, id=nil)
+		if !params["#{scope}_id"].nil? && params["#{scope}_id"] == id.to_s || 
+				scope.nil? && id.nil? && params[:user_id].nil? && params[:team_id].nil?
+			is_scope = true
+		end
+
+		if params[:priority] == priority
+			is_priority = true
+		end
+
+		if params[:status] == status
+			is_status = true
+		end
+
+		is_scope && is_priority && is_status ? 'active' : ''	
+	end
+
 end
