@@ -18,10 +18,6 @@ class TicketsController < ApplicationController
       @tickets = current_user.tickets.paginate(:page => params[:page])
     end
 
-    if params[:priority]
-      @tickets = @tickets.where(:priority => params[:priority])
-    end
-
     if params[:status] == "closed"
       @tickets = @tickets.closed
     else

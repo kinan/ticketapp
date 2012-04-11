@@ -45,3 +45,5 @@ gem 'cancan'
 
 # Pagination (bootstrap support: config/initializers/will_paginate.rb)
 gem 'will_paginate'
+
+

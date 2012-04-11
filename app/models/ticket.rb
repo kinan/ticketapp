@@ -4,6 +4,7 @@ class Ticket < ActiveRecord::Base
   belongs_to :contact, :class_name => 'User', :foreign_key => 'contact_id'
   belongs_to :creator, :class_name => 'User', :foreign_key => 'creator_id'
   belongs_to :team
+  belongs_to :priority
   has_many :comments, :dependent => :destroy
 
   validates :subject, :description, :team_id, :contact_id, :presence => true
@@ -31,7 +32,7 @@ class Ticket < ActiveRecord::Base
   end
 
   def self.with_priority(priority)
-    where(:priority => priority)
+    Priority.find_by_name(priority).tickets.open
   end
 
   def self.open
@@ -42,6 +43,13 @@ class Ticket < ActiveRecord::Base
     where(:status => "closed")
   end
 
+  def due_date
+    self.created_at + (self.priority.days).days
+  end
+
+def open?
+  closed_at.nil?
+end
 
   protected
   def set_closed_at

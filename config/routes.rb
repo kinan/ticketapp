@@ -1,5 +1,9 @@
 Ticketapp::Application.routes.draw do
 
+  resources :priorities do
+    resources :tickets
+  end
+
   resources :users do 
     resources :tickets
   end

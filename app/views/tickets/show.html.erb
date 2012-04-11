@@ -1,11 +1,11 @@
-<h1><small>#<%= @ticket.id %></small>&#032;<%= @ticket.subject %>&#032;<%= display_priority(@ticket.priority) %></h1>
+<h1><small>#<%= @ticket.id %></small>&#032;<%= @ticket.subject %>&#032;<%= display_due(@ticket) %></h1>
 <i><%=display_user @ticket.creator %></i>, <%= display_date_time @ticket.created_at %>
 <hr>
 <p>
 	<%= @ticket.description %>
 </p>
 <div class="row">
-  <div class="span2"><i class="icon-flag"></i><%= @ticket.status.humanize %></div>
+  <div class="span2"><i class="icon-flag"></i><%= @ticket.priority.name %></div>
   <div class="span2"><i class="icon-tag"></i><%= display_team @ticket.team %></div>
   <div class="span2"><i class="icon-inbox"></i><%= display_user(@ticket.assignee) %></div>
   <div class="span2"><i class="icon-comment"></i><%= @ticket.comments.count %></div>

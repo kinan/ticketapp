@@ -11,12 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120405153557) do
+ActiveRecord::Schema.define(:version => 20120410151431) do
 
   create_table "comments", :force => true do |t|
     t.integer  "user_id"
     t.integer  "ticket_id"
     t.text     "content"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "priorities", :force => true do |t|
+    t.string   "name"
+    t.integer  "days"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -37,7 +44,6 @@ ActiveRecord::Schema.define(:version => 20120405153557) do
   create_table "tickets", :force => true do |t|
     t.string   "subject"
     t.text     "description"
-    t.string   "priority"
     t.string   "status"
     t.integer  "contact_id"
     t.integer  "creator_id"
@@ -46,12 +52,12 @@ ActiveRecord::Schema.define(:version => 20120405153557) do
     t.datetime "updated_at",  :null => false
     t.datetime "closed_at"
     t.integer  "team_id"
+    t.integer  "priority_id"
   end
 
   add_index "tickets", ["assignee_id"], :name => "index_tickets_on_assignee_id"
   add_index "tickets", ["contact_id"], :name => "index_tickets_on_contact_id"
   add_index "tickets", ["creator_id"], :name => "index_tickets_on_creator_id"
-  add_index "tickets", ["priority"], :name => "index_tickets_on_priority"
   add_index "tickets", ["status"], :name => "index_tickets_on_status"
 
   create_table "users", :force => true do |t|

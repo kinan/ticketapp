@@ -1,0 +1,13 @@
+<%= simple_form_for(@priority) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :name %>
+    <%= f.input :days %>
+  </div>
+
+  <div class="form-actions">
+  	<%= link_to "Cancel", priorities_path,  :class => "btn" %>
+    <%= f.button :submit, :class=> "btn-primary" %>
+  </div>
+<% end %>

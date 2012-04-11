@@ -7,19 +7,22 @@ module TicketsHelper
 		date.strftime("%B %d, %Y at %I:%M%p")
 	end
 
-	def display_priority(priority)
-		case priority
-		when "low"
-  		klass = "label label-inverse"
-		when "medium"
-			klass = "label label-warning"
-  	when "high"
-  		klass =  "label label-important"
+
+	def display_due(ticket)
+		due_in_days = (ticket.due_date - Time.now)/(3600 * 24)
+		if ticket.open?
+			if due_in_days < 0
+				klass =  "label label-important"
+			elsif due_in_days < 3
+				klass = "label label-warning"
+			elsif due_in_days
+				klass = "label label-success"
+			end
 		else
-  		klass = "label"
+			klass = "label label-inverse"
 		end
-		raw("<span class='#{klass}'>#{priority.humanize}</span>")
-	end
+		raw("<span class='#{klass}'>#{distance_of_time_in_words_to_now ticket.due_date}</span>")
+  end
 
 	# Display Unassigned, if a user got deleted or unassigned tickets
 	def display_user(user)
@@ -31,21 +34,17 @@ module TicketsHelper
 		team ? team.name : "Unassigned"
 	end
 
-	def active_link(scope, priority, status, id=nil)
+	def active_link(scope, status, id=nil)
 		if !params["#{scope}_id"].nil? && params["#{scope}_id"] == id.to_s || 
 				scope.nil? && id.nil? && params[:user_id].nil? && params[:team_id].nil?
 			is_scope = true
-		end
-
-		if params[:priority] == priority
-			is_priority = true
 		end
 
 		if params[:status] == status
 			is_status = true
 		end
 
-		is_scope && is_priority && is_status ? 'active' : ''	
+		is_scope && is_status ? 'active' : ''	
 	end
 
 end
