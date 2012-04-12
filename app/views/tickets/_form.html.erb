@@ -14,7 +14,7 @@
     <% end %>
     <%= f.input :subject, :input_html => { :maxlength => 50, :class => "input-xlarge" } %>
     <%= f.input :description, :input_html => { :rows => 7, :class => "input-xlarge" } %>
-    <%= f.input :priority, :collection => Ticket::PRIORITIES, :as => :radio_buttons, :checked => "low" %>
+    <%= f.input :priority_id, :collection => Priority.all, :as => :radio_buttons%>
     <%= f.input :team_id, :collection => Team.all %>
     <% if @ticket.id? %>
       <%= f.input :status, :collection => Ticket::STATUSES %>

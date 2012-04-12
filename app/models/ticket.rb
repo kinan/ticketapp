@@ -7,7 +7,9 @@ class Ticket < ActiveRecord::Base
   belongs_to :priority
   has_many :comments, :dependent => :destroy
 
-  validates :subject, :description, :team_id, :contact_id, :presence => true
+
+
+  #validates :subject, :description, :team_id, :contact_id, :presence => true
 
   # Callbacks
   before_update :set_closed_at, :send_assignment_notification
@@ -21,14 +23,12 @@ class Ticket < ActiveRecord::Base
   scope :closed, where(:closed_at => !nil)
   
 
-  # Priorites
-  PRIORITIES = ["low", "medium", "high"]
-
   # Statuses
   STATUSES = ["open", "pending", "closed"]
   
   def init
      self.status  ||= "open"   #will set the default role to customer
+     self.priority ||= Priority.find_by_name "low"
   end
 
   def self.with_priority(priority)
@@ -47,9 +47,22 @@ class Ticket < ActiveRecord::Base
     self.created_at + (self.priority.days).days
   end
 
-def open?
-  closed_at.nil?
-end
+  def open?
+    closed_at.nil?
+  end
+
+  def self.receive_mail(message)
+    contact = User.find_by_email message.from.first
+
+    # Default team
+    team_id = 5
+    if contact
+     ticket = Ticket.new :subject => message.subject, :description => message.body.decoded, 
+        :contact_id => contact.id, :creator_id => contact.id, :team_id => team_id
+     ticket.save
+
+    end
+  end
 
   protected
   def set_closed_at
@@ -64,7 +77,9 @@ end
 
   def send_creation_notification
     UserMailer.ticket_confirmation(self).deliver
-    UserMailer.ticket_team_assignment(self).deliver
+    if self.assignee
+      UserMailer.ticket_team_assignment(self).deliver
+    end
   end
 
   def send_assignment_notification
