@@ -7,7 +7,7 @@ class Ticket < ActiveRecord::Base
   belongs_to :priority
   has_many :comments, :dependent => :destroy
 
-
+  has_attached_file :attachment
 
   #validates :subject, :description, :team_id, :contact_id, :presence => true
 
@@ -77,9 +77,7 @@ class Ticket < ActiveRecord::Base
 
   def send_creation_notification
     UserMailer.ticket_confirmation(self).deliver
-    if self.assignee
-      UserMailer.ticket_team_assignment(self).deliver
-    end
+    UserMailer.ticket_team_assignment(self).deliver
   end
 
   def send_assignment_notification

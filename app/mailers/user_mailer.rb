@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "from@example.com"
+  default from: ""
 
   def password_reset(user)
     @user = user
@@ -23,8 +23,10 @@ class UserMailer < ActionMailer::Base
   def ticket_team_assignment(ticket)
   	@ticket = ticket
   	@team = ticket.team
+    emails = []
+    @team.users.each{|u| emails << u.email}
   	
-  	mail :to => @team.users.join(", "), :subject => "New remedy ticket is assigned to your team"
+  	mail :to => emails.join(", "), :subject => "New remedy ticket is assigned to your team"
   end
 
   def ticket_user_assignment(ticket)

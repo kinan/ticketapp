@@ -47,3 +47,7 @@ gem 'cancan'
 gem 'will_paginate'
 
 gem 'mailman', require: false
+
+gem 'backbone-on-rails'
+
+gem "paperclip", "~> 3.0"

@@ -11,6 +11,11 @@
   <div class="span2"><i class="icon-comment"></i><%= @ticket.comments.count %></div>
   <div class="span1 offset1" style="float: right;"><%= link_to 'Edit', edit_ticket_path(@ticket) %></div>
 </div>
+<% if @ticket.attachment%>
+<div>
+	<%= link_to @ticket.attachment.name, @ticket.attachment.url%>
+</div>
+<%end%>
 <br>
 <h2>Comments</h2>
 <hr>
