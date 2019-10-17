@@ -46,6 +46,7 @@ GEM
       execjs
     coffee-script-source (1.2.0)
     commonjs (0.2.5)
+    concurrent-ruby (1.1.5)
     eco (1.0.0)
       coffee-script
       eco-source
@@ -57,7 +58,8 @@ GEM
       multi_json (~> 1.0)
     fssm (0.2.9)
     hike (1.2.1)
-    i18n (0.6.0)
+    i18n (0.9.5)
+      concurrent-ruby (~> 1.0)
     journey (1.0.3)
     jquery-rails (2.0.1)
       railties (>= 3.2.0, < 5.0)
