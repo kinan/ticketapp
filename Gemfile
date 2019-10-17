@@ -50,4 +50,4 @@ gem 'mailman', require: false
 
 gem 'backbone-on-rails'
 
-gem "paperclip", "~> 3.0"
+gem "paperclip", "~> 4.3"
